@@ -1,18 +1,30 @@
 "use client";
 import { useForm } from "react-hook-form";
+import axios from "@/lib/axios";
+import { useAuthContext } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm();
+  const { setUser } = useAuthContext();
+  const router = useRouter();
 
   //handle onsubmit
   const onSubmit = async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 3000));
-      console.log("login form data", data);
+      const res = await axios.post("auth/login", data);
+      // console.log(res.data);
+      const { user, msg, accessToken } = res.data;
+
+      // set accessToken
+      setUser({ ...user, accessToken });
+      reset();
+      router.push("/dashboard");
     } catch (err) {
       alert("Login failed!");
     }
@@ -60,7 +72,7 @@ const LoginForm = () => {
         )}
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded"
+          className="bg-blue-600 w-[120px] text-white px-4 py-2 rounded"
           disabled={isSubmitting}
         >
           {isSubmitting ? "Logging..." : "Login"}
