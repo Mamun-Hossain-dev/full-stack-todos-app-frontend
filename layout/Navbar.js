@@ -28,6 +28,9 @@ const Navbar = () => {
                 </ul>
               </details>
             </li>
+            <li>
+              <Link href={"/dashboard"}>dashboard</Link>
+            </li>
           </ul>
         </div>
       </div>

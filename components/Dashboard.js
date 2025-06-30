@@ -4,19 +4,24 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 const Dashboard = () => {
-  const { user } = useAuthContext();
+  const { user, isLoading, isRefreshing } = useAuthContext();
   const router = useRouter();
 
   useEffect(() => {
-    if (!user) {
+    if (!isLoading && !isRefreshing && user === null) {
+      console.log("Redirecting to login...");
       router.push("/login");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  }, [user, isLoading, isRefreshing, router]);
+
+  if (isLoading || isRefreshing)
+    return <p className="text-xl text-center">Loading...</p>;
+
   if (!user) return null;
+
   return (
     <div className="my-6">
-      <h2 className="text-2xl text-center">Welcome, {`${user.name}`} </h2>
+      <h2 className="text-2xl text-center">Welcome, {user.name}</h2>
     </div>
   );
 };
