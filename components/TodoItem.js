@@ -3,7 +3,7 @@
 
 const TodoItem = ({ todo, onUpdate, onDelete }) => {
   return (
-    <div className="border p-3 rounded bg-white shadow flex justify-between items-start">
+    <div className="border p-3 rounded bg-gray text-white shadow flex justify-between items-start">
       <div>
         <h2 className="font-semibold">{todo.text}</h2>
         <p>{todo.description}</p>

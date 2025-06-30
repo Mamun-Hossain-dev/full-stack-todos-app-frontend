@@ -27,12 +27,12 @@ const TodoComponent = () => {
   };
 
   const handleUpdate = async (id, data) => {
-    const res = await axios.put("/todos/${id}", data);
+    const res = await axios.put(`/todos/${id}`, data);
     setTodos((prev) => prev.map((todo) => (todo._id === id ? res.data : todo)));
   };
 
   const handleDelete = async (id) => {
-    await axios.delete("/todos/${id}");
+    await axios.delete(`/todos/${id}`);
     setTodos((prev) => prev.filter((todo) => todo._id !== id));
   };
 
@@ -41,7 +41,7 @@ const TodoComponent = () => {
       <div className="max-w-xl mx-auto mt-10">
         <h1 className="text-2xl font-bold mb-4">Your Todos</h1>
         <TodoForm onSubmit={handleCreate} />
-        <div className="mt-4 space-y-2">
+        <div className="mt-8 space-y-2">
           {todos.map((todo) => (
             <TodoItem
               key={todo._id}
